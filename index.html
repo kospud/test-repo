@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Демо GitHub Pages</title>
+  <meta name="description" content="Пример статической страницы, размещённой на GitHub Pages." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --surface: #121a30;
+      --text: #e8edf7;
+      --muted: #9aa7bd;
+      --accent: #5eead4;
+      --accent-2: #818cf8;
+      --border: rgba(255, 255, 255, 0.1);
+      --radius: 18px;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(94, 234, 212, 0.16), transparent 35%),
+        radial-gradient(circle at 85% 10%, rgba(129, 140, 248, 0.18), transparent 40%),
+        var(--bg);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1080px, calc(100% - 2.5rem));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 1.5rem 0;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #06121f;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 5rem 0 4rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.45rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      margin: 0 auto 1rem;
+      max-width: 18ch;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      max-width: 46rem;
+      margin: 0 auto 2rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      color: #06121f;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      padding-bottom: 4rem;
+    }
+
+    .card {
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(94, 234, 212, 0.45);
+    }
+
+    .card h2 {
+      margin: 0 0 0.6rem;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .step {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 1rem;
+      border-radius: 10px;
+      background: rgba(94, 234, 212, 0.14);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    code {
+      padding: 0.15em 0.4em;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .nav-links {
+        display: none;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 3.5rem 0 3rem;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero > * {
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero > *:nth-child(2) { animation-delay: 0.08s; }
+    .hero > *:nth-child(3) { animation-delay: 0.16s; }
+    .hero > *:nth-child(4) { animation-delay: 0.24s; }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <nav class="nav">
+      <a class="logo" href="#">
+        <span class="logo-mark">GH</span>
+        GitHub Pages Demo
+      </a>
+      <div class="nav-links">
+        <a href="#how">Как задеплоить</a>
+        <a href="https://pages.github.com/" target="_blank" rel="noopener">Документация</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <span class="badge">Статический сайт • HTML + CSS</span>
+      <h1>
+        Твой сайт уже <span class="gradient-text">живёт на GitHub Pages</span>
+      </h1>
+      <p class="lead">
+        Это не просто «Hello, world»: здесь есть адаптивная вёрстка, тёмная тема,
+        градиенты и анимации. Положи файл <code>index.html</code> в корень репозитория —
+        и GitHub Pages сможет опубликовать его как сайт.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#how">Как это работает</a>
+        <a class="btn btn-ghost" href="https://pages.github.com/" target="_blank" rel="noopener">
+          Открыть GitHub Pages
+        </a>
+      </div>
+    </section>
+
+    <section id="how" class="container grid">
+      <article class="card">
+        <span class="step">1</span>
+        <h2>Создай репозиторий</h2>
+        <p>
+          Создай публичный репозиторий, например <code>github-pages-demo</code>,
+          и добавь в его корень файл <code>index.html</code>.
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="step">2</span>
+        <h2>Запушь файлы</h2>
+        <p>
+          Выполни <code>git add .</code>, затем <code>git commit -m "Initial site"</code>
+          и <code>git push origin main</code>.
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="step">3</span>
+        <h2>Включи Pages</h2>
+        <p>
+          В настройках репозитория открой <code>Settings → Pages</code>, выбери
+          <code>Deploy from a branch</code>, ветку <code>main</code> и папку <code>/ (root)</code>.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>Сделано как демонстрация GitHub Pages. Обнови <code>index.html</code>, сделай push — сайт обновится.</p>
+  </footer>
+</body>
+</html>

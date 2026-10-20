@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Pages — быстрый деплой</title>
+  <meta name="description" content="Демонстрационная страница для публикации статического сайта на GitHub Pages." />
+
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --text: #16202e;
+      --muted: #5b6779;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --green: #16a34a;
+      --border: #e3e8ef;
+      --code-bg: #0f172a;
+      --code-text: #e2e8f0;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1040px, calc(100% - 2.5rem));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(246, 248, 251, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(22, 163, 74, 0.15);
+    }
+
+    .topbar nav {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .topbar a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 5rem 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      margin: 1.1rem 0 1rem;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .highlight {
+      color: var(--primary);
+    }
+
+    .hero p {
+      max-width: 34rem;
+      margin: 0 0 1.8rem;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.8rem 1.35rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 650;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button-primary {
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+    }
+
+    .button-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      background: var(--surface);
+      border-color: var(--border);
+    }
+
+    .button-secondary:hover {
+      border-color: #c8d2e0;
+      transform: translateY(-2px);
+    }
+
+    .terminal {
+      border: 1px solid #24304a;
+      border-radius: var(--radius);
+      background: var(--code-bg);
+      color: var(--code-text);
+      box-shadow: 0 25px 55px rgba(15, 23, 42, 0.22);
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.75rem 1rem;
+      background: #1e293b;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #22c55e; }
+
+    .terminal-title {
+      margin-left: 0.5rem;
+      color: #94a3b8;
+      font-size: 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    .terminal-body {
+      padding: 1.25rem;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.92rem;
+      overflow-x: auto;
+    }
+
+    .terminal-body .comment {
+      color: #64748b;
+    }
+
+    .terminal-body .command {
+      color: #93c5fd;
+    }
+
+    .terminal-body .success {
+      color: #4ade80;
+    }
+
+    .copy-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding: 0.8rem 1rem;
+      border: 1px dashed #334155;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .copy-button {
+      padding: 0.45rem 0.8rem;
+      border: 0;
+      border-radius: 8px;
+      background: #334155;
+      color: white;
+      font: inherit;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .copy-button:hover {
+      background: #475569;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.1rem;
+      padding: 1rem 0 5rem;
+    }
+
+    .feature {
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 35px rgba(22, 32, 46, 0.08);
+    }
+
+    .feature-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    .feature h2 {
+      margin: 0 0 0.45rem;
+      font-size: 1.1rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    code.inline {
+      padding: 0.15em 0.4em;
+      border-radius: 6px;
+      background: #eef2f7;
+      color: #0f172a;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.9em;
+    }
+
+    footer {
+      padding: 1.75rem 0 2.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 3.5rem 0;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar nav {
+        display: none;
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero > * {
+      animation: appear 0.6s ease both;
+    }
+
+    .hero > *:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#">
+        <span class="brand-dot"></span>
+        pages-demo
+      </a>
+      <nav>
+        <a href="#deploy">Деплой</a>
+        <a href="#features">Возможности</a>
+        <a href="https://docs.github.com/en/pages" target="_blank" rel="noopener">Docs</a>
+      </nav>
+    </div>
+  </div>
+
+  <main>
+    <section class="container hero">
+      <div>
+        <span class="eyebrow">● GitHub Pages ready</span>
+        <h1>
+          Статический сайт — <span class="highlight">без сервера и сборки</span>
+        </h1>
+        <p>
+          Положи этот файл в репозиторий, включи Pages — и получишь публичную страницу
+          по HTTPS. Никакого Node.js, Docker или бэкенда для такого демо не требуется.
+        </p>
+        <div class="cta-row">
+          <a class="button button-primary" href="#deploy">Показать деплой</a>
+          <button class="button button-secondary" id="themeButton" type="button">
+            Нажми меня
+          </button>
+        </div>
+      </div>
+
+      <div class="terminal" id="deploy">
+        <div class="terminal-header">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="terminal-title">bash — deploy.sh</span>
+        </div>
+
+        <div class="terminal-body">
+          <div><span class="comment"># 1. Инициализация проекта</span></div>
+          <div><span class="command">git init</span></div>
+          <div><span class="command">git add index.html</span></div>
+          <div><span class="command">git commit -m "Add GitHub Pages demo"</span></div>
+          <br />
+          <div><span class="comment"># 2. Публикация в GitHub</span></div>
+          <div><span class="command">git branch -M main</span></div>
+          <div><span class="command">git push -u origin main</span></div>
+          <br />
+          <div><span class="success">✔ Site published: https://username.github.io/repo-name/</span></div>
+
+          <div class="copy-row">
+            <span>git push -u origin main</span>
+            <button class="copy-button" id="copyButton" type="button">Copy</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="container features">
+      <article class="feature">
+        <div class="feature-icon">⚡</div>
+        <h2>Мгновенный деплой</h2>
+        <p>
+          Достаточно запушить <code class="inline">index.html</code> и выбрать
+          <code class="inline">main</code> вместе с <code class="inline">/ (root)</code>
+          в настройках Pages.
+        </p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">🎨</div>
+        <h2>Чистый CSS</h2>
+        <p>
+          Стили находятся прямо в файле: сетки, hover-эффекты, адаптивность
+          и анимация появления блоков.
+        </p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">🧩</div>
+        <h2>Расширяемо</h2>
+        <p>
+          Можно добавить <code class="inline">styles.css</code>,
+          <code class="inline">script.js</code>, изображения или отдельные страницы —
+          Pages отдаёт обычные статические файлы.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>Демо-страница для GitHub Pages. Измени файл, сделай <code class="inline">git push</code> — изменения появятся на сайте.</p>
+  </footer>
+
+  <script>
+    const themeButton = document.getElementById("themeButton");
+    let clicked = false;
+
+    themeButton.addEventListener("click", () => {
+      clicked = !clicked;
+      themeButton.textContent = clicked ? "Работает 🎉" : "Нажми меня";
+      document.documentElement.style.setProperty(
+        "--primary",
+        clicked ? "#16a34a" : "#2563eb"
+      );
+      document.documentElement.style.setProperty(
+        "--primary-dark",
+        clicked ? "#15803d" : "#1d4ed8"
+      );
+    });
+
+    const copyButton = document.getElementById("copyButton");
+
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText("git push -u origin main");
+        copyButton.textContent = "Скопировано!";
+      } catch {
+        copyButton.textContent = "Скопируй вручную";
+      }
+
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 1600);
+    });
+  </script>
+</body>
+</html>
